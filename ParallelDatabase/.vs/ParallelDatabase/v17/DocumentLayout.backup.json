@@ -1,0 +1,47 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\zackz\\GitHub\\ParallelDB\\ParallelDatabase\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{012E4871-5ED4-4828-A739-ADBD8D93C427}|ParallelDatabase.vcxproj|C:\\Users\\zackz\\GitHub\\ParallelDB\\ParallelDatabase\\ParallelDatabase.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{012E4871-5ED4-4828-A739-ADBD8D93C427}|ParallelDatabase.vcxproj|solutionrelative:ParallelDatabase.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 324,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ParallelDatabase.cpp",
+              "DocumentMoniker": "C:\\Users\\zackz\\GitHub\\ParallelDB\\ParallelDatabase\\ParallelDatabase.cpp",
+              "RelativeDocumentMoniker": "ParallelDatabase.cpp",
+              "ToolTip": "C:\\Users\\zackz\\GitHub\\ParallelDB\\ParallelDatabase\\ParallelDatabase.cpp",
+              "RelativeToolTip": "ParallelDatabase.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHEBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-25T21:57:38.034Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 22,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
