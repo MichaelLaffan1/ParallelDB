@@ -8,7 +8,7 @@ const int MAX_TUPLES = 100;
 const int MAX_RESULT_LENGTH = 256;
 const int MAX_COMMAND_LENGTH = 256;
 
-// Safe string copy function
+
 void safeCopyString(char* dest, const char* src, int maxLen) {
     int i = 0;
     while (src[i] != '\0' && i < maxLen - 1) {
@@ -18,7 +18,6 @@ void safeCopyString(char* dest, const char* src, int maxLen) {
     dest[i] = '\0';
 }
 
-// Safe string length function
 int safeStringLength(const char* str, int maxLen) {
     int len = 0;
     while (str[len] != '\0' && len < maxLen) {
@@ -27,7 +26,6 @@ int safeStringLength(const char* str, int maxLen) {
     return len;
 }
 
-// Safe string comparison function
 bool safeCompareStrings(const char* str1, const char* str2, int maxLen) {
     int i = 0;
     while (i < maxLen - 1 && str1[i] != '\0' && str2[i] != '\0') {
@@ -37,7 +35,7 @@ bool safeCompareStrings(const char* str1, const char* str2, int maxLen) {
     return str1[i] == str2[i];
 }
 
-// Improved Tuple structure with stack-based arrays
+// [Tuple struct remains the same]
 struct Tuple {
     char attr1[MAX_ATTR_LENGTH];
     char attr2[MAX_ATTR_LENGTH];
@@ -49,14 +47,12 @@ struct Tuple {
         attr3 = 0;
     }
 
-    // Copy constructor
     Tuple(const Tuple& other) {
         safeCopyString(attr1, other.attr1, MAX_ATTR_LENGTH);
         safeCopyString(attr2, other.attr2, MAX_ATTR_LENGTH);
         attr3 = other.attr3;
     }
 
-    // Assignment operator
     Tuple& operator=(const Tuple& other) {
         if (this != &other) {
             safeCopyString(attr1, other.attr1, MAX_ATTR_LENGTH);
@@ -67,6 +63,7 @@ struct Tuple {
     }
 };
 
+// [Database class remains the same]
 class Database {
 private:
     Tuple* data;
@@ -88,7 +85,7 @@ public:
             safeCopyString(data[size].attr2, attr2, MAX_ATTR_LENGTH);
             data[size].attr3 = attr3;
             size++;
-            std::cout << "Worker inserted: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
+            std::cout << "Inserted: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
         }
     }
 
@@ -102,11 +99,10 @@ public:
                 safeCompareStrings(data[i].attr2, attr2, MAX_ATTR_LENGTH) &&
                 data[i].attr3 == attr3) {
 
-                // Format: "Found: attr1, attr2, attr3\n"
+                // [Rest of query method remains the same]
                 safeCopyString(tempResult, "Found: ", MAX_RESULT_LENGTH);
-                resultPos = 7; // Length of "Found: "
+                resultPos = 7;
 
-                // Add attr1
                 int j = 0;
                 while (data[i].attr1[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 3) {
                     tempResult[resultPos++] = data[i].attr1[j++];
@@ -114,7 +110,6 @@ public:
                 tempResult[resultPos++] = ',';
                 tempResult[resultPos++] = ' ';
 
-                // Add attr2
                 j = 0;
                 while (data[i].attr2[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 3) {
                     tempResult[resultPos++] = data[i].attr2[j++];
@@ -122,7 +117,6 @@ public:
                 tempResult[resultPos++] = ',';
                 tempResult[resultPos++] = ' ';
 
-                // Convert attr3 to string
                 int num = data[i].attr3;
                 char numStr[12];
                 int numLen = 0;
@@ -138,14 +132,12 @@ public:
                     }
                 }
 
-                // Reverse the number string
                 for (int k = 0; k < numLen / 2; k++) {
                     char temp = numStr[k];
                     numStr[k] = numStr[numLen - 1 - k];
                     numStr[numLen - 1 - k] = temp;
                 }
 
-                // Add number to result
                 for (int k = 0; k < numLen && resultPos < MAX_RESULT_LENGTH - 2; k++) {
                     tempResult[resultPos++] = numStr[k];
                 }
@@ -154,65 +146,56 @@ public:
                 tempResult[resultPos] = '\0';
 
                 safeCopyString(result, tempResult, MAX_RESULT_LENGTH);
-                std::cout << "Worker found match: " << result << std::endl;
+                std::cout << "Found match: " << result << std::endl;
                 return;
             }
         }
     }
 };
 
+// [parseInputLine and extractValue functions remain the same]
 void extractValue(const char* input, char* output, int& pos, int maxLen) {
     int outIdx = 0;
-    // Skip spaces and find opening parenthesis
     while (input[pos] == ' ' || input[pos] == '(') pos++;
 
-    // Copy until comma, closing parenthesis, or end
     while (input[pos] != '\0' && input[pos] != ',' && input[pos] != ')' && outIdx < maxLen - 1) {
-        if (input[pos] != ' ') { // Skip spaces
+        if (input[pos] != ' ') {
             output[outIdx++] = input[pos];
         }
         pos++;
     }
     output[outIdx] = '\0';
-    if (input[pos] == ',') pos++; // Skip comma if present
+    if (input[pos] == ',') pos++;
 }
 
 void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
     int pos = 0;
 
-    // Initialize outputs
     attr1[0] = '\0';
     attr2[0] = '\0';
     attr3 = 0;
 
-    // For INSERT, find "VALUES" keyword
     if (line[0] == 'I') {
         while (line[pos] != '\0' && line[pos] != '(') pos++;
         if (line[pos] == '\0') return;
 
-        // Extract values
         extractValue(line, attr1, pos, MAX_ATTR_LENGTH);
         extractValue(line, attr2, pos, MAX_ATTR_LENGTH);
 
-        // Extract numeric value
         while (line[pos] == ' ' || line[pos] == ',') pos++;
         while (line[pos] >= '0' && line[pos] <= '9') {
             attr3 = attr3 * 10 + (line[pos] - '0');
             pos++;
         }
     }
-    // For SELECT, parse WHERE conditions
     else if (line[0] == 'S') {
-        // Find WHERE clause
         while (line[pos] != '\0' && (line[pos] != 'W' || line[pos + 1] != 'H')) pos++;
         if (line[pos] == '\0') return;
 
-        // Skip "WHERE "
         pos += 6;
 
-        // Parse attr1
         if (strstr(line + pos, "attr1=") == line + pos) {
-            pos += 6; // Skip "attr1="
+            pos += 6;
             int attrPos = 0;
             while (line[pos] != '\0' && line[pos] != ' ' && attrPos < MAX_ATTR_LENGTH - 1) {
                 if (line[pos] != ' ') {
@@ -223,12 +206,11 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
             attr1[attrPos] = '\0';
         }
 
-        // Find AND and parse attr2
         while (line[pos] != '\0' && (line[pos] != 'A' || line[pos + 1] != 'N')) pos++;
         if (line[pos] != '\0') {
-            pos += 4; // Skip "AND "
+            pos += 4;
             if (strstr(line + pos, "attr2=") == line + pos) {
-                pos += 6; // Skip "attr2="
+                pos += 6;
                 int attrPos = 0;
                 while (line[pos] != '\0' && line[pos] != ' ' && attrPos < MAX_ATTR_LENGTH - 1) {
                     if (line[pos] != ' ') {
@@ -240,12 +222,11 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
             }
         }
 
-        // Find AND and parse attr3
         while (line[pos] != '\0' && (line[pos] != 'A' || line[pos + 1] != 'N')) pos++;
         if (line[pos] != '\0') {
-            pos += 4; // Skip "AND "
+            pos += 4;
             if (strstr(line + pos, "attr3=") == line + pos) {
-                pos += 6; // Skip "attr3="
+                pos += 6;
                 while (line[pos] >= '0' && line[pos] <= '9') {
                     attr3 = attr3 * 10 + (line[pos] - '0');
                     pos++;
@@ -255,7 +236,57 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
     }
 }
 
-void runWorker(int rank) {
+// New function to handle single-process execution
+void runSingleProcess() {
+    Database db;
+    std::ifstream inputFile("input.sql");
+    std::ofstream outputFile("output.txt", std::ios::out);
+
+    if (!inputFile.is_open()) {
+        std::cerr << "Error: Could not open input file\n";
+        return;
+    }
+
+    if (!outputFile.is_open()) {
+        std::cerr << "Error: Could not open output file\n";
+        return;
+    }
+
+    char command[MAX_COMMAND_LENGTH];
+    char attr1[MAX_ATTR_LENGTH];
+    char attr2[MAX_ATTR_LENGTH];
+    int attr3;
+
+    while (inputFile.getline(command, MAX_COMMAND_LENGTH)) {
+        std::cout << "Processing command: " << command << std::endl;
+
+        if (command[0] == 'I') {  // INSERT
+            parseInputLine(command, attr1, attr2, attr3);
+            db.insert(attr1, attr2, attr3);
+        }
+        else if (command[0] == 'S') {  // SELECT
+            parseInputLine(command, attr1, attr2, attr3);
+            char result[MAX_RESULT_LENGTH];
+            db.query(attr1, attr2, attr3, result);
+
+            if (result[0] != '\0') {
+                outputFile << result;
+            }
+            else {
+                outputFile << "No records found. Query attributes: ";
+                outputFile << "attr1=" << attr1 << ", ";
+                outputFile << "attr2=" << attr2 << ", ";
+                outputFile << "attr3=" << attr3 << "\n";
+            }
+            outputFile.flush();
+        }
+    }
+
+    inputFile.close();
+    outputFile.close();
+}
+
+void runWorker(int rank, int numWorkers) {
     Database db;
     char buffer1[MAX_ATTR_LENGTH];
     char buffer2[MAX_ATTR_LENGTH];
@@ -273,19 +304,24 @@ void runWorker(int rank) {
         if (status.MPI_TAG == 0) {  // INSERT
             MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 1, MPI_COMM_WORLD, &status);
             MPI_Recv(&attr3, 1, MPI_INT, 0, 2, MPI_COMM_WORLD, &status);
-            db.insert(buffer1, buffer2, attr3);
+
+            // Only insert if this worker should handle this data
+            if ((attr3 % numWorkers) == (rank - 1)) {
+                db.insert(buffer1, buffer2, attr3);
+            }
         }
         else if (status.MPI_TAG == 3) {  // SELECT
             MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 4, MPI_COMM_WORLD, &status);
             MPI_Recv(&attr3, 1, MPI_INT, 0, 5, MPI_COMM_WORLD, &status);
 
+            // Query local database partition
             db.query(buffer1, buffer2, attr3, result);
             MPI_Send(result, MAX_RESULT_LENGTH, MPI_CHAR, 0, 6, MPI_COMM_WORLD);
         }
     }
 }
 
-void runMaster(int numNodes) {
+void runMaster(int numWorkers) {
     std::ifstream inputFile("input.sql");
     std::ofstream outputFile("output.txt", std::ios::out);
 
@@ -311,36 +347,50 @@ void runMaster(int numNodes) {
             parseInputLine(command, attr1, attr2, attr3);
             std::cout << "Parsed INSERT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
-            int targetNode = 1 + (attr3 % (numNodes));
-            MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, targetNode, 0, MPI_COMM_WORLD);
-            MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, targetNode, 1, MPI_COMM_WORLD);
-            MPI_Send(&attr3, 1, MPI_INT, targetNode, 2, MPI_COMM_WORLD);
+            // Broadcast insert to all workers
+            for (int worker = 1; worker <= numWorkers; ++worker) {
+                MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 0, MPI_COMM_WORLD);
+                MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 1, MPI_COMM_WORLD);
+                MPI_Send(&attr3, 1, MPI_INT, worker, 2, MPI_COMM_WORLD);
+            }
         }
         else if (command[0] == 'S') {  // SELECT
             parseInputLine(command, attr1, attr2, attr3);
             std::cout << "Parsed SELECT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
-            for (int node = 1; node <= numNodes; ++node) {
-                MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, node, 3, MPI_COMM_WORLD);
-                MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, node, 4, MPI_COMM_WORLD);
-                MPI_Send(&attr3, 1, MPI_INT, node, 5, MPI_COMM_WORLD);
+            bool found = false;
+            // Query all workers
+            for (int worker = 1; worker <= numWorkers; ++worker) {
+                MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 3, MPI_COMM_WORLD);
+                MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 4, MPI_COMM_WORLD);
+                MPI_Send(&attr3, 1, MPI_INT, worker, 5, MPI_COMM_WORLD);
 
                 char result[MAX_RESULT_LENGTH];
                 MPI_Status status;
-                MPI_Recv(result, MAX_RESULT_LENGTH, MPI_CHAR, node, 6, MPI_COMM_WORLD, &status);
+                MPI_Recv(result, MAX_RESULT_LENGTH, MPI_CHAR, worker, 6, MPI_COMM_WORLD, &status);
 
                 if (result[0] != '\0') {
                     outputFile << result;
                     outputFile.flush();
+                    found = true;
+                    break;  // Once we find a match, we can stop searching
                 }
+            }
+
+            if (!found) {
+                outputFile << "No records found. Query attributes: ";
+                outputFile << "attr1=" << attr1 << ", ";
+                outputFile << "attr2=" << attr2 << ", ";
+                outputFile << "attr3=" << attr3 << "\n";
+                outputFile.flush();
             }
         }
     }
 
-    // Send termination signal
-    for (int node = 1; node <= numNodes; ++node) {
+    // Send termination signal to all workers
+    for (int worker = 1; worker <= numWorkers; ++worker) {
         char terminateMsg = '\0';
-        MPI_Send(&terminateMsg, 1, MPI_CHAR, node, 99, MPI_COMM_WORLD);
+        MPI_Send(&terminateMsg, 1, MPI_CHAR, worker, 99, MPI_COMM_WORLD);
     }
 
     inputFile.close();
@@ -348,24 +398,49 @@ void runMaster(int numNodes) {
 }
 
 int main(int argc, char** argv) {
+
     MPI_Init(&argc, &argv);
+
 
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    if (size < 2) {
-        std::cerr << "This program requires at least 2 processes\n";
-        MPI_Finalize();
-        return 1;
-    }
+    double totalStartTime = MPI_Wtime();
 
-    if (rank == 0) {
-        runMaster(size - 1);
+    // Additional timing variables
+    double processStartTime, processEndTime;
+    double totalProcessTime = 0.0;
+
+    if (size == 1) {
+        processStartTime = MPI_Wtime();
+        runSingleProcess();
+        processEndTime = MPI_Wtime();
+        totalProcessTime = processEndTime - processStartTime;
     }
     else {
-        runWorker(rank);
+        if (rank == 0) {
+            processStartTime = MPI_Wtime();
+            runMaster(size - 1);
+            processEndTime = MPI_Wtime();
+            totalProcessTime = processEndTime - processStartTime;
+        }
+        else {
+            runWorker(rank, size - 1);
+        }
     }
+
+    double totalEndTime = MPI_Wtime();
+
     MPI_Finalize();
+
+    // Calculate and print total execution time on the root process
+    double totalExecutionTime = totalEndTime - totalStartTime;
+
+    if (rank == 0) {
+        std::cout << "Total Execution Time: " << totalExecutionTime << " seconds" << std::endl;
+        std::cout << "Master Process Time: " << totalProcessTime << " seconds" << std::endl;
+    }
+
     return 0;
 }
