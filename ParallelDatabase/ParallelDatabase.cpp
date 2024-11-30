@@ -4,7 +4,7 @@
 
 // Define constants
 const int MAX_ATTR_LENGTH = 100;
-const int MAX_TUPLES = 100;
+const int MAX_TUPLES = 20000000;
 const int MAX_RESULT_LENGTH = 256;
 const int MAX_COMMAND_LENGTH = 256;
 
@@ -35,7 +35,6 @@ bool safeCompareStrings(const char* str1, const char* str2, int maxLen) {
     return str1[i] == str2[i];
 }
 
-// [Tuple struct remains the same]
 struct Tuple {
     char attr1[MAX_ATTR_LENGTH];
     char attr2[MAX_ATTR_LENGTH];
@@ -63,7 +62,6 @@ struct Tuple {
     }
 };
 
-// [Database class remains the same]
 class Database {
 private:
     Tuple* data;
@@ -77,6 +75,10 @@ public:
 
     ~Database() {
         delete[] data;
+    }
+
+    int getNumTuples() const {
+        return size;
     }
 
     void insert(const char* attr1, const char* attr2, int attr3) {
@@ -99,7 +101,6 @@ public:
                 safeCompareStrings(data[i].attr2, attr2, MAX_ATTR_LENGTH) &&
                 data[i].attr3 == attr3) {
 
-                // [Rest of query method remains the same]
                 safeCopyString(tempResult, "Found: ", MAX_RESULT_LENGTH);
                 resultPos = 7;
 
@@ -153,7 +154,6 @@ public:
     }
 };
 
-// [parseInputLine and extractValue functions remain the same]
 void extractValue(const char* input, char* output, int& pos, int maxLen) {
     int outIdx = 0;
     while (input[pos] == ' ' || input[pos] == '(') pos++;
@@ -236,18 +236,18 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
     }
 }
 
-// New function to handle single-process execution
 void runSingleProcess() {
     Database db;
     std::ifstream inputFile("input.sql");
     std::ofstream outputFile("output.txt", std::ios::out);
+    std::ofstream tupleCountFile("tuple_count.txt", std::ios::out);  // Open a file for tuple counts
 
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file\n";
         return;
     }
 
-    if (!outputFile.is_open()) {
+    if (!outputFile.is_open() || !tupleCountFile.is_open()) {
         std::cerr << "Error: Could not open output file\n";
         return;
     }
@@ -278,12 +278,15 @@ void runSingleProcess() {
                 outputFile << "attr2=" << attr2 << ", ";
                 outputFile << "attr3=" << attr3 << "\n";
             }
-            outputFile.flush();
         }
+
+        // Write the number of tuples after each operation
+        tupleCountFile << "Node " << 0 << " has " << db.getNumTuples() << " tuples." << std::endl;
     }
 
     inputFile.close();
     outputFile.close();
+    tupleCountFile.close();  // Close the file
 }
 
 void runWorker(int rank, int numWorkers) {
@@ -292,6 +295,13 @@ void runWorker(int rank, int numWorkers) {
     char buffer2[MAX_ATTR_LENGTH];
     int attr3;
     char result[MAX_RESULT_LENGTH];
+
+    // Open output file to write tuple count for each worker
+    std::ofstream outputFile("tuple_count.txt", std::ios::app);
+    if (!outputFile.is_open()) {
+        std::cerr << "Error: Could not open worker output file\n";
+        return;
+    }
 
     while (true) {
         MPI_Status status;
@@ -318,7 +328,15 @@ void runWorker(int rank, int numWorkers) {
             db.query(buffer1, buffer2, attr3, result);
             MPI_Send(result, MAX_RESULT_LENGTH, MPI_CHAR, 0, 6, MPI_COMM_WORLD);
         }
+
+        // Write the current number of tuples for this worker
+        outputFile << "Node " << rank << " has " << db.getNumTuples() << " tuples." << std::endl;
+        outputFile.flush();
+        //std::cout << "Node " << rank << " has " << db.getNumTuples() << " tuples." << std::endl;
     }
+
+    // Close the output file
+    outputFile.close();
 }
 
 void runMaster(int numWorkers) {
