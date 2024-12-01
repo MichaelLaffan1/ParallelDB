@@ -35,6 +35,54 @@ bool safeCompareStrings(const char* str1, const char* str2, int maxLen) {
     return str1[i] == str2[i];
 }
 
+// Custom vector implementation
+template <typename T>
+class MyVector {
+private:
+    T* data;
+    int capacity;
+    int size;
+
+    void resize() {
+        int newCapacity = capacity * 2;
+        T* newData = new T[newCapacity];
+        for (int i = 0; i < size; ++i) {
+            newData[i] = data[i];
+        }
+        delete[] data;
+        data = newData;
+        capacity = newCapacity;
+    }
+
+public:
+    MyVector() : capacity(10), size(0) {
+        data = new T[capacity];
+    }
+
+    ~MyVector() {
+        delete[] data;
+    }
+
+    void push_back(const T& value) {
+        if (size == capacity) {
+            resize();
+        }
+        data[size++] = value;
+    }
+
+    T& operator[](int index) {
+        return data[index];
+    }
+
+    const T& operator[](int index) const {
+        return data[index];
+    }
+
+    int getSize() const {
+        return size;
+    }
+};
+
 struct Tuple {
     char attr1[MAX_ATTR_LENGTH];
     char attr2[MAX_ATTR_LENGTH];
@@ -240,7 +288,7 @@ void runSingleProcess() {
     Database db;
     std::ifstream inputFile("input.sql");
     std::ofstream outputFile("output.txt", std::ios::out);
-    std::ofstream tupleCountFile("tuple_count.txt", std::ios::out);  // Open a file for tuple counts
+    std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);  // Open a file for tuple counts
 
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file\n";
@@ -278,10 +326,9 @@ void runSingleProcess() {
                 outputFile << "attr2=" << attr2 << ", ";
                 outputFile << "attr3=" << attr3 << "\n";
             }
-        }
 
-        // Write the number of tuples after each operation
-        tupleCountFile << "Node " << 0 << " has " << db.getNumTuples() << " tuples." << std::endl;
+            tupleCountFile << db.getNumTuples() << ",\n";
+        }
     }
 
     inputFile.close();
@@ -327,12 +374,11 @@ void runWorker(int rank, int numWorkers) {
             // Query local database partition
             db.query(buffer1, buffer2, attr3, result);
             MPI_Send(result, MAX_RESULT_LENGTH, MPI_CHAR, 0, 6, MPI_COMM_WORLD);
-        }
 
-        // Write the current number of tuples for this worker
-        outputFile << "Node " << rank << " has " << db.getNumTuples() << " tuples." << std::endl;
-        outputFile.flush();
-        //std::cout << "Node " << rank << " has " << db.getNumTuples() << " tuples." << std::endl;
+            // Send the current tuple count to master
+            int tupleCount = db.getNumTuples();
+            MPI_Send(&tupleCount, 1, MPI_INT, 0, 7, MPI_COMM_WORLD);
+        }
     }
 
     // Close the output file
@@ -342,6 +388,7 @@ void runWorker(int rank, int numWorkers) {
 void runMaster(int numWorkers) {
     std::ifstream inputFile("input.sql");
     std::ofstream outputFile("output.txt", std::ios::out);
+    std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);
 
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file\n";
@@ -377,6 +424,8 @@ void runMaster(int numWorkers) {
             std::cout << "Parsed SELECT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
             bool found = false;
+            MyVector<int> tupleCounts; // Store tuple counts for CSV
+
             // Query all workers
             for (int worker = 1; worker <= numWorkers; ++worker) {
                 MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 3, MPI_COMM_WORLD);
@@ -391,8 +440,12 @@ void runMaster(int numWorkers) {
                     outputFile << result;
                     outputFile.flush();
                     found = true;
-                    break;  // Once we find a match, we can stop searching
                 }
+
+                // Get the tuple count from the worker
+                int workerTupleCount;
+                MPI_Recv(&workerTupleCount, 1, MPI_INT, worker, 7, MPI_COMM_WORLD, &status);
+                tupleCounts.push_back(workerTupleCount);
             }
 
             if (!found) {
@@ -402,6 +455,11 @@ void runMaster(int numWorkers) {
                 outputFile << "attr3=" << attr3 << "\n";
                 outputFile.flush();
             }
+            // Write counts to CSV
+            for (int i = 0; i < tupleCounts.getSize(); ++i) {
+                tupleCountFile << (i > 0 ? "," : "") << tupleCounts[i];
+            }
+            tupleCountFile << "\n";
         }
     }
 
