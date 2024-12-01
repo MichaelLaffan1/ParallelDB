@@ -477,29 +477,18 @@ int main(int argc, char** argv) {
 
     MPI_Init(&argc, &argv);
 
-
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     double totalStartTime = MPI_Wtime();
 
-    // Additional timing variables
-    double processStartTime, processEndTime;
-    double totalProcessTime = 0.0;
-
     if (size == 1) {
-        processStartTime = MPI_Wtime();
         runSingleProcess();
-        processEndTime = MPI_Wtime();
-        totalProcessTime = processEndTime - processStartTime;
     }
     else {
         if (rank == 0) {
-            processStartTime = MPI_Wtime();
             runMaster(size - 1);
-            processEndTime = MPI_Wtime();
-            totalProcessTime = processEndTime - processStartTime;
         }
         else {
             runWorker(rank, size - 1);
@@ -515,7 +504,6 @@ int main(int argc, char** argv) {
 
     if (rank == 0) {
         std::cout << "Total Execution Time: " << totalExecutionTime << " seconds" << std::endl;
-        std::cout << "Master Process Time: " << totalProcessTime << " seconds" << std::endl;
     }
 
     return 0;
