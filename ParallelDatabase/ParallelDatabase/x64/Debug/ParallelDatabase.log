@@ -1,2 +1,4 @@
 ﻿  ParallelDatabase.cpp
+C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(701,68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(719,68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   ParallelDatabase.vcxproj -> C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\x64\Debug\ParallelDatabase.exe

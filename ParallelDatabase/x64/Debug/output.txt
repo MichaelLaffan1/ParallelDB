@@ -1,1 +1,18 @@
-Found: Romance, DreamWorks, 2000
+Deleted record 11: Biography, HBO, 2015
+Total records deleted: 1
+
+Updated record 7:
+  Before: Thriller, Sony, 2020
+  After:  Western, Disney, 2020
+Total records updated: 1
+
+Total records updated: 0
+
+Deleted record 14: Crime, Focus, 2000
+Deleted record 17: Romance, DreamWorks, 2000
+Total records deleted: 2
+
+No records found. Query attributes: attr1=Romance, attr3=2000
+Found: Western, Disney, 2020
+Found: Western, Miramax, 1975
+No records found. Query attributes: attr1=Biography, 

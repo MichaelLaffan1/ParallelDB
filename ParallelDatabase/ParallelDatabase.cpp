@@ -138,18 +138,27 @@ private:
     Tuple* data;
     int capacity;
     int size;
+    bool* isDeleted;  // Track deleted records
 
 public:
     Database() : capacity(MAX_TUPLES), size(0) {
         data = new Tuple[capacity];
+        isDeleted = new bool[capacity]();  // Initialize all to false
     }
 
     ~Database() {
         delete[] data;
+        delete[] isDeleted;
     }
 
     int getNumTuples() const {
-        return size;
+        int activeTuples = 0;
+        for (int i = 0; i < size; i++) {
+            if (!isDeleted[i]) {
+                activeTuples++;
+            }
+        }
+        return activeTuples;
     }
 
     void insert(const char* attr1, const char* attr2, int attr3) {
@@ -158,9 +167,90 @@ public:
             safeCopyString(data[size].attr2, attr2, MAX_ATTR_LENGTH);
             data[size].attr3 = attr3;
             size++;
+            isDeleted[size] = false;
             std::cout << "Inserted: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
         }
     }
+
+    int deleteRecords(const char* whereAttr1, const char* whereAttr2, int whereAttr3, std::ofstream& outputFile) {
+        int deletedCount = 0;
+
+        for (int i = 0; i < size; ++i) {
+            if (isDeleted[i]) continue;  // Skip already deleted records
+
+            bool attr1Match = (safeStringLength(whereAttr1, MAX_ATTR_LENGTH) == 0) ||
+                (whereAttr1[0] == '*') ||
+                matchesPattern(data[i].attr1, whereAttr1, MAX_ATTR_LENGTH);
+
+            bool attr2Match = (safeStringLength(whereAttr2, MAX_ATTR_LENGTH) == 0) ||
+                (whereAttr2[0] == '*') ||
+                matchesPattern(data[i].attr2, whereAttr2, MAX_ATTR_LENGTH);
+
+            bool attr3Match = (whereAttr3 == -1) || (data[i].attr3 == whereAttr3);
+
+            if (attr1Match && attr2Match && attr3Match) {
+                // Log the deleted record
+                outputFile << "Deleted record " << i << ": "
+                    << data[i].attr1 << ", "
+                    << data[i].attr2 << ", "
+                    << data[i].attr3 << "\n";
+
+                isDeleted[i] = true;
+                deletedCount++;
+            }
+        }
+
+        return deletedCount;
+    }
+
+    int update(const char* whereAttr1, const char* whereAttr2, int whereAttr3,
+        const char* setAttr1, const char* setAttr2, int setAttr3, std::ofstream& outputFile) {
+        int updatedCount = 0;
+
+        for (int i = 0; i < size; ++i) {
+            if (isDeleted[i]) continue;  // Skip deleted records
+            bool attr1Match = (safeStringLength(whereAttr1, MAX_ATTR_LENGTH) == 0) ||
+                (whereAttr1[0] == '*') ||
+                matchesPattern(data[i].attr1, whereAttr1, MAX_ATTR_LENGTH);
+
+            bool attr2Match = (safeStringLength(whereAttr2, MAX_ATTR_LENGTH) == 0) ||
+                (whereAttr2[0] == '*') ||
+                matchesPattern(data[i].attr2, whereAttr2, MAX_ATTR_LENGTH);
+
+            bool attr3Match = (whereAttr3 == -1) || (data[i].attr3 == whereAttr3);
+
+            if (attr1Match && attr2Match && attr3Match) {
+                // Store old values for output
+                char oldAttr1[MAX_ATTR_LENGTH], oldAttr2[MAX_ATTR_LENGTH];
+                int oldAttr3;
+
+                safeCopyString(oldAttr1, data[i].attr1, MAX_ATTR_LENGTH);
+                safeCopyString(oldAttr2, data[i].attr2, MAX_ATTR_LENGTH);
+                oldAttr3 = data[i].attr3;
+
+                // Perform the update
+                if (safeStringLength(setAttr1, MAX_ATTR_LENGTH) > 0) {
+                    safeCopyString(data[i].attr1, setAttr1, MAX_ATTR_LENGTH);
+                }
+                if (safeStringLength(setAttr2, MAX_ATTR_LENGTH) > 0) {
+                    safeCopyString(data[i].attr2, setAttr2, MAX_ATTR_LENGTH);
+                }
+                if (setAttr3 != -1) {
+                    data[i].attr3 = setAttr3;
+                }
+
+                // Output the before and after values
+                outputFile << "Updated record " << i << ":\n";
+                outputFile << "  Before: " << oldAttr1 << ", " << oldAttr2 << ", " << oldAttr3 << "\n";
+                outputFile << "  After:  " << data[i].attr1 << ", " << data[i].attr2 << ", " << data[i].attr3 << "\n";
+
+                updatedCount++;
+            }
+        }
+
+        return updatedCount;
+    }
+
 
     void query(const char* attr1, const char* attr2, int attr3, char* result) {
         result[0] = '\0';
@@ -169,6 +259,7 @@ public:
         bool anyResultFound = false;
 
         for (int i = 0; i < size; ++i) {
+            if (isDeleted[i]) continue;  // Skip deleted records
             // More comprehensive matching logic
             bool attr1Match = (safeStringLength(attr1, MAX_ATTR_LENGTH) == 0) ||
                 (attr1[0] == '*') ||
@@ -265,13 +356,16 @@ void extractValue(const char* input, char* output, int& pos, int maxLen) {
     if (input[pos] == ',') pos++;
 }
 
-void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
+void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3, char* setAttr1, char* setAttr2, int& setAttr3) {
     int pos = 0;
 
     // Reset everything to wildcard/empty state
     attr1[0] = '\0';
     attr2[0] = '\0';
     attr3 = -1;
+    setAttr1[0] = '\0';
+    setAttr2[0] = '\0';
+    setAttr3 = -1;
 
     if (line[0] == 'I') {
         // INSERT parsing remains the same as before
@@ -346,13 +440,122 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
             attr3 = -1;
         }
     }
+    else if (line[0] == 'U') {  // UPDATE
+        // Skip "UPDATE"
+        while (line[pos] != '\0' && line[pos] != 'S') pos++;
+        if (line[pos] == '\0') return;
+
+        // Parse SET clause
+        pos += 3;  // Skip "SET"
+
+        // Parse SET values
+        while (line[pos] != '\0' && line[pos] != 'W') {
+            if (safeCompareStrings(line + pos, "attr1=", 6)) {
+                pos += 6;
+                int attrPos = 0;
+                while (line[pos] != '\0' && line[pos] != ',' && line[pos] != ' ' && attrPos < MAX_ATTR_LENGTH - 1) {
+                    setAttr1[attrPos++] = line[pos++];
+                }
+                setAttr1[attrPos] = '\0';
+            }
+            else if (safeCompareStrings(line + pos, "attr2=", 6)) {
+                pos += 6;
+                int attrPos = 0;
+                while (line[pos] != '\0' && line[pos] != ',' && line[pos] != ' ' && attrPos < MAX_ATTR_LENGTH - 1) {
+                    setAttr2[attrPos++] = line[pos++];
+                }
+                setAttr2[attrPos] = '\0';
+            }
+            else if (safeCompareStrings(line + pos, "attr3=", 6)) {
+                pos += 6;
+                setAttr3 = 0;
+                while (line[pos] >= '0' && line[pos] <= '9') {
+                    setAttr3 = setAttr3 * 10 + (line[pos] - '0');
+                    pos++;
+                }
+            }
+            pos++;
+        }
+
+        // Parse WHERE clause (similar to SELECT)
+        if (line[pos] == 'W') {
+            pos += 5;  // Skip "WHERE"
+            while (line[pos] != '\0') {
+                if (safeCompareStrings(line + pos, "attr1=", 6)) {
+                    pos += 6;
+                    int attrPos = 0;
+                    while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                        attr1[attrPos++] = line[pos++];
+                    }
+                    attr1[attrPos] = '\0';
+                }
+                else if (safeCompareStrings(line + pos, "attr2=", 6)) {
+                    pos += 6;
+                    int attrPos = 0;
+                    while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                        attr2[attrPos++] = line[pos++];
+                    }
+                    attr2[attrPos] = '\0';
+                }
+                else if (safeCompareStrings(line + pos, "attr3=", 6)) {
+                    pos += 6;
+                    attr3 = 0;
+                    while (line[pos] >= '0' && line[pos] <= '9') {
+                        attr3 = attr3 * 10 + (line[pos] - '0');
+                        pos++;
+                    }
+                }
+                else {
+                    pos++;
+                }
+            }
+        }
+    }
+    // Add DELETE parsing
+    if (line[0] == 'D') {  // DELETE
+        int pos = 0;
+        // Skip "DELETE FROM"
+        while (line[pos] != '\0' && line[pos] != 'W') pos++;
+        if (line[pos] == '\0') return;
+
+        pos += 5;  // Skip "WHERE"
+        while (line[pos] != '\0') {
+            if (safeCompareStrings(line + pos, "attr1=", 6)) {
+                pos += 6;
+                int attrPos = 0;
+                while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                    attr1[attrPos++] = line[pos++];
+                }
+                attr1[attrPos] = '\0';
+            }
+            else if (safeCompareStrings(line + pos, "attr2=", 6)) {
+                pos += 6;
+                int attrPos = 0;
+                while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                    attr2[attrPos++] = line[pos++];
+                }
+                attr2[attrPos] = '\0';
+            }
+            else if (safeCompareStrings(line + pos, "attr3=", 6)) {
+                pos += 6;
+                attr3 = 0;
+                while (line[pos] >= '0' && line[pos] <= '9') {
+                    attr3 = attr3 * 10 + (line[pos] - '0');
+                    pos++;
+                }
+            }
+            else {
+                pos++;
+            }
+        }
+    }
 }
 
 void runSingleProcess() {
     Database db;
     std::ifstream inputFile("input.sql");
     std::ofstream outputFile("output.txt", std::ios::out);
-    std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);  // Open a file for tuple counts
+    std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);
 
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file\n";
@@ -368,16 +571,19 @@ void runSingleProcess() {
     char attr1[MAX_ATTR_LENGTH];
     char attr2[MAX_ATTR_LENGTH];
     int attr3;
+    char setAttr1[MAX_ATTR_LENGTH];
+    char setAttr2[MAX_ATTR_LENGTH];
+    int setAttr3;
 
     while (inputFile.getline(command, MAX_COMMAND_LENGTH)) {
         std::cout << "Processing command: " << command << std::endl;
 
         if (command[0] == 'I') {  // INSERT
-            parseInputLine(command, attr1, attr2, attr3);
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
             db.insert(attr1, attr2, attr3);
         }
         else if (command[0] == 'S') {  // SELECT
-            parseInputLine(command, attr1, attr2, attr3);
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
             char result[MAX_RESULT_LENGTH];
             db.query(attr1, attr2, attr3, result);
 
@@ -386,26 +592,54 @@ void runSingleProcess() {
             }
             else {
                 outputFile << "No records found. Query attributes: ";
-                outputFile << "attr1=" << attr1 << ", ";
-                outputFile << "attr2=" << attr2 << ", ";
-                outputFile << "attr3=" << attr3 << "\n";
+                if (attr1[0] != '\0' && attr1[0] != '*') {
+                    outputFile << "attr1=" << attr1 << ", ";
+                }
+                if (attr2[0] != '\0' && attr2[0] != '*') {
+                    outputFile << "attr2=" << attr2 << ", ";
+                }
+                if (attr3 != -1) {
+                    outputFile << "attr3=" << attr3;
+                }
+                outputFile << "\n";
             }
 
+            tupleCountFile << db.getNumTuples() << ",\n";
+        }
+        else if (command[0] == 'U') {  // UPDATE
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
+            int updateCount = db.update(attr1, attr2, attr3, setAttr1, setAttr2, setAttr3, outputFile);
+            outputFile << "Total records updated: " << updateCount << "\n\n";
+            outputFile.flush();
+
+            // Also log tuple count after update
+            tupleCountFile << db.getNumTuples() << ",\n";
+        }
+        else if (command[0] == 'D') {  // DELETE
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
+            int deleteCount = db.deleteRecords(attr1, attr2, attr3, outputFile);
+            outputFile << "Total records deleted: " << deleteCount << "\n\n";
+            outputFile.flush();
+
+            // Also log tuple count after delete
             tupleCountFile << db.getNumTuples() << ",\n";
         }
     }
 
     inputFile.close();
     outputFile.close();
-    tupleCountFile.close();  // Close the file
+    tupleCountFile.close();
 }
 
 void runWorker(int rank, int numWorkers) {
     Database db;
     char buffer1[MAX_ATTR_LENGTH];
     char buffer2[MAX_ATTR_LENGTH];
-    int attr3;
+    char setBuffer1[MAX_ATTR_LENGTH];
+    char setBuffer2[MAX_ATTR_LENGTH];
+    int attr3, setAttr3;
     char result[MAX_RESULT_LENGTH];
+
 
     // Open output file to write tuple count for each worker
     std::ofstream outputFile("tuple_count.txt", std::ios::app);
@@ -443,6 +677,47 @@ void runWorker(int rank, int numWorkers) {
             int tupleCount = db.getNumTuples();
             MPI_Send(&tupleCount, 1, MPI_INT, 0, 7, MPI_COMM_WORLD);
         }
+        else if (status.MPI_TAG == 8) {  // UPDATE
+            MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 9, MPI_COMM_WORLD, &status);
+            MPI_Recv(&attr3, 1, MPI_INT, 0, 10, MPI_COMM_WORLD, &status);
+            MPI_Recv(setBuffer1, MAX_ATTR_LENGTH, MPI_CHAR, 0, 11, MPI_COMM_WORLD, &status);
+            MPI_Recv(setBuffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 12, MPI_COMM_WORLD, &status);
+            MPI_Recv(&setAttr3, 1, MPI_INT, 0, 13, MPI_COMM_WORLD, &status);
+
+            char updateResult[MAX_RESULT_LENGTH] = "";
+            std::ofstream tempOutputFile("temp_output.txt", std::ios::app);
+            int updateCount = db.update(buffer1, buffer2, attr3, setBuffer1, setBuffer2, setAttr3, tempOutputFile);
+            tempOutputFile.close();
+
+            // Read the temporary file and send its contents
+            std::ifstream tempInputFile("temp_output.txt");
+            std::string updateDetails((std::istreambuf_iterator<char>(tempInputFile)),
+                std::istreambuf_iterator<char>());
+            tempInputFile.close();
+            std::remove("temp_output.txt");
+
+            // Send update count and details back to master
+            MPI_Send(&updateCount, 1, MPI_INT, 0, 14, MPI_COMM_WORLD);
+            MPI_Send(updateDetails.c_str(), updateDetails.length() + 1, MPI_CHAR, 0, 15, MPI_COMM_WORLD);
+        }
+        else if (status.MPI_TAG == 16) {  // DELETE
+            MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 17, MPI_COMM_WORLD, &status);
+            MPI_Recv(&attr3, 1, MPI_INT, 0, 18, MPI_COMM_WORLD, &status);
+
+            std::ofstream tempOutputFile("temp_output.txt", std::ios::app);
+            int deleteCount = db.deleteRecords(buffer1, buffer2, attr3, tempOutputFile);
+            tempOutputFile.close();
+
+            // Read and send delete details
+            std::ifstream tempInputFile("temp_output.txt");
+            std::string deleteDetails((std::istreambuf_iterator<char>(tempInputFile)),
+                std::istreambuf_iterator<char>());
+            tempInputFile.close();
+            std::remove("temp_output.txt");
+
+            MPI_Send(&deleteCount, 1, MPI_INT, 0, 19, MPI_COMM_WORLD);
+            MPI_Send(deleteDetails.c_str(), deleteDetails.length() + 1, MPI_CHAR, 0, 20, MPI_COMM_WORLD);
+        }
     }
 
     // Close the output file
@@ -453,6 +728,10 @@ void runMaster(int numWorkers) {
     std::ifstream inputFile("input.sql");
     std::ofstream outputFile("output.txt", std::ios::out);
     std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);
+
+    char setAttr1[MAX_ATTR_LENGTH];
+    char setAttr2[MAX_ATTR_LENGTH];
+    int setAttr3;
 
     if (!inputFile.is_open()) {
         std::cerr << "Error: Could not open input file\n";
@@ -473,7 +752,7 @@ void runMaster(int numWorkers) {
         std::cout << "Processing command: " << command << std::endl;
 
         if (command[0] == 'I') {  // INSERT
-            parseInputLine(command, attr1, attr2, attr3);
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
             std::cout << "Parsed INSERT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
             // Broadcast insert to all workers
@@ -489,7 +768,7 @@ void runMaster(int numWorkers) {
             bool attr2Specified = false;
             bool attr3Specified = false;
 
-            parseInputLine(command, attr1, attr2, attr3);
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
             std::cout << "Parsed SELECT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
             // Determine which attributes were specifically queried
@@ -554,6 +833,67 @@ void runMaster(int numWorkers) {
                 tupleCountFile << (i > 0 ? "," : "") << tupleCounts[i];
             }
             tupleCountFile << "\n";
+        }
+        else if (command[0] == 'U') {  // UPDATE
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
+
+            int totalUpdated = 0;
+            for (int worker = 1; worker <= numWorkers; ++worker) {
+                // Send update command to worker
+                MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 8, MPI_COMM_WORLD);
+                MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 9, MPI_COMM_WORLD);
+                MPI_Send(&attr3, 1, MPI_INT, worker, 10, MPI_COMM_WORLD);
+                MPI_Send(setAttr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 11, MPI_COMM_WORLD);
+                MPI_Send(setAttr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 12, MPI_COMM_WORLD);
+                MPI_Send(&setAttr3, 1, MPI_INT, worker, 13, MPI_COMM_WORLD);
+
+                // Receive update results
+                int workerUpdateCount;
+                MPI_Status status;
+                MPI_Recv(&workerUpdateCount, 1, MPI_INT, worker, 14, MPI_COMM_WORLD, &status);
+
+                // Receive and write update details
+                char updateDetails[MAX_RESULT_LENGTH * 10];  // Larger buffer for multiple updates
+                MPI_Recv(updateDetails, MAX_RESULT_LENGTH * 10, MPI_CHAR, worker, 15, MPI_COMM_WORLD, &status);
+                if (workerUpdateCount > 0) {
+                    outputFile << "Updates from worker " << worker << ":\n";
+                    outputFile << updateDetails;
+                }
+
+                totalUpdated += workerUpdateCount;
+            }
+
+            outputFile << "Total records updated: " << totalUpdated << "\n\n";
+            outputFile.flush();
+        }
+        else if (command[0] == 'D') {  // DELETE
+            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
+
+            int totalDeleted = 0;
+            for (int worker = 1; worker <= numWorkers; ++worker) {
+                // Send delete command to worker
+                MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 16, MPI_COMM_WORLD);
+                MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 17, MPI_COMM_WORLD);
+                MPI_Send(&attr3, 1, MPI_INT, worker, 18, MPI_COMM_WORLD);
+
+                // Receive delete results
+                int workerDeleteCount;
+                MPI_Status status;
+                MPI_Recv(&workerDeleteCount, 1, MPI_INT, worker, 19, MPI_COMM_WORLD, &status);
+
+                // Receive and write delete details
+                char deleteDetails[MAX_RESULT_LENGTH * 10];
+                MPI_Recv(deleteDetails, MAX_RESULT_LENGTH * 10, MPI_CHAR, worker, 20, MPI_COMM_WORLD, &status);
+                if (workerDeleteCount > 0) {
+                    outputFile << "Deletes from worker " << worker << ":\n";
+                    outputFile << deleteDetails;
+                }
+
+                totalDeleted += workerDeleteCount;
+            }
+
+            outputFile << "Total records deleted: " << totalDeleted << "\n\n";
+            outputFile.flush();
         }
     }
 
