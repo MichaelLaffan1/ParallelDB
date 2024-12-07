@@ -19,8 +19,7 @@ INSERT INTO table VALUES (Romance, DreamWorks, 2000)
 DELETE FROM table WHERE attr1=Biography
 UPDATE SET attr1=Western, attr2=Disney WHERE attr1=Thriller
 UPDATE SET attr3=2000 WHERE attr1=Biography
-DELETE FROM table WHERE attr3=2000
-SELECT attr1 FROM table WHERE attr1=Romance AND attr3=2000
+SELECT attr2, attr3 FROM table WHERE attr1=Romance AND attr3=2000
 SELECT * FROM table WHERE attr1=Western
 SELECT * FROM table WHERE attr1=Biography
 

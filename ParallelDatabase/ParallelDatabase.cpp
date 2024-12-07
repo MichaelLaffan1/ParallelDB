@@ -7,6 +7,8 @@ const int MAX_ATTR_LENGTH = 100;
 const int MAX_TUPLES = 20000000;
 const int MAX_RESULT_LENGTH = 256;
 const int MAX_COMMAND_LENGTH = 256;
+const int MAX_COLUMNS = 10;  
+const int MAX_COLUMN_NAME = 20;
 
 // Custom string length function
 int safeStringLength(const char* str, int maxLen) {
@@ -56,6 +58,102 @@ bool matchesPattern(const char* str, const char* pattern, int maxLen) {
 
     // Check for exact match
     return safeCompareStrings(str, pattern, maxLen);
+}
+
+class SelectQuery {
+public:
+    char selectedColumns[MAX_COLUMNS][MAX_COLUMN_NAME];
+    int selectedColumnCount;
+    char attr1Condition[MAX_ATTR_LENGTH];
+    char attr2Condition[MAX_ATTR_LENGTH];
+    int attr3Condition;
+
+    SelectQuery() {
+        selectedColumnCount = 0;
+        attr1Condition[0] = '\0';
+        attr2Condition[0] = '\0';
+        attr3Condition = -1;
+    }
+
+    void addSelectedColumn(const char* columnName) {
+        if (selectedColumnCount < MAX_COLUMNS) {
+            safeCopyString(selectedColumns[selectedColumnCount], columnName, MAX_COLUMN_NAME);
+            selectedColumnCount++;
+        }
+    }
+
+    bool isColumnSelected(const char* columnName) const {
+        if (selectedColumnCount == 0) return true;  // If no specific columns, return all
+
+        for (int i = 0; i < selectedColumnCount; ++i) {
+            if (safeCompareStrings(selectedColumns[i], columnName, MAX_COLUMN_NAME)) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+void parseSelectQuery(const char* line, SelectQuery& query) {
+    int pos = 0;
+    // Reset query
+    query.selectedColumnCount = 0;
+    query.attr1Condition[0] = '\0';
+    query.attr2Condition[0] = '\0';
+    query.attr3Condition = -1;
+
+    // Parse selected columns
+    while (line[pos] != '\0' && line[pos] != 'F' && line[pos] != 'W') {
+        if (safeCompareStrings(line + pos, "attr1", 5)) {
+            query.addSelectedColumn("attr1");
+            pos += 5;
+        }
+        else if (safeCompareStrings(line + pos, "attr2", 5)) {
+            query.addSelectedColumn("attr2");
+            pos += 5;
+        }
+        else if (safeCompareStrings(line + pos, "attr3", 5)) {
+            query.addSelectedColumn("attr3");
+            pos += 5;
+        }
+        pos++;
+    }
+
+    // Parse WHERE conditions
+    while (line[pos] != '\0') {
+        // Check for attr1 condition
+        if (safeCompareStrings(line + pos, "attr1=", 6)) {
+            pos += 6;
+            int attrPos = 0;
+            query.attr1Condition[0] = '\0';
+            while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                query.attr1Condition[attrPos++] = line[pos++];
+            }
+            query.attr1Condition[attrPos] = '\0';
+        }
+        // Check for attr2 condition
+        else if (safeCompareStrings(line + pos, "attr2=", 6)) {
+            pos += 6;
+            int attrPos = 0;
+            query.attr2Condition[0] = '\0';
+            while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                query.attr2Condition[attrPos++] = line[pos++];
+            }
+            query.attr2Condition[attrPos] = '\0';
+        }
+        // Check for attr3 condition
+        else if (safeCompareStrings(line + pos, "attr3=", 6)) {
+            pos += 6;
+            query.attr3Condition = 0;
+            while (line[pos] >= '0' && line[pos] <= '9') {
+                query.attr3Condition = query.attr3Condition * 10 + (line[pos] - '0');
+                pos++;
+            }
+        }
+        else {
+            pos++;
+        }
+    }
 }
 
 struct Tuple {
@@ -139,6 +237,70 @@ private:
     int capacity;
     int size;
     bool* isDeleted;  // Track deleted records
+    void formatSelectResult(const Tuple& tuple, const SelectQuery& query, char* result, int& resultPos) {
+        bool firstColumn = true;
+
+        if (query.isColumnSelected("attr1")) {
+            if (!firstColumn) {
+                result[resultPos++] = ',';
+                result[resultPos++] = ' ';
+            }
+            int j = 0;
+            while (tuple.attr1[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 2) {
+                result[resultPos++] = tuple.attr1[j++];
+            }
+            firstColumn = false;
+        }
+
+        if (query.isColumnSelected("attr2")) {
+            if (!firstColumn) {
+                result[resultPos++] = ',';
+                result[resultPos++] = ' ';
+            }
+            int j = 0;
+            while (tuple.attr2[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 2) {
+                result[resultPos++] = tuple.attr2[j++];
+            }
+            firstColumn = false;
+        }
+
+        if (query.isColumnSelected("attr3")) {
+            if (!firstColumn) {
+                result[resultPos++] = ',';
+                result[resultPos++] = ' ';
+            }
+            int num = tuple.attr3;
+            char numStr[12];
+            int numLen = 0;
+
+            // Convert number to string (same as previous implementation)
+            if (num == 0) {
+                numStr[numLen++] = '0';
+            }
+            else {
+                int temp = num;
+                while (temp > 0) {
+                    numStr[numLen++] = '0' + (temp % 10);
+                    temp /= 10;
+                }
+            }
+
+            // Reverse number string
+            for (int k = 0; k < numLen / 2; k++) {
+                char temp = numStr[k];
+                numStr[k] = numStr[numLen - 1 - k];
+                numStr[numLen - 1 - k] = temp;
+            }
+
+            // Copy number to result
+            for (int k = 0; k < numLen && resultPos < MAX_RESULT_LENGTH - 2; k++) {
+                result[resultPos++] = numStr[k];
+            }
+        }
+
+        result[resultPos++] = '\n';
+        result[resultPos] = '\0';
+    }
 
 public:
     Database() : capacity(MAX_TUPLES), size(0) {
@@ -338,6 +500,45 @@ public:
 
                 std::cout << "Found match: " << tempResult << std::endl;
             }
+        }
+    }
+    void enhancedQuery(const SelectQuery& query, char* result) {
+        result[0] = '\0';
+        char tempResult[MAX_RESULT_LENGTH];
+        int resultPos = 0;
+        bool anyResultFound = false;
+
+        for (int i = 0; i < size; ++i) {
+            // Matching logic
+            bool attr1Match = (safeStringLength(query.attr1Condition, MAX_ATTR_LENGTH) == 0) ||
+                (query.attr1Condition[0] == '*') ||
+                matchesPattern(data[i].attr1, query.attr1Condition, MAX_ATTR_LENGTH);
+
+            bool attr2Match = (safeStringLength(query.attr2Condition, MAX_ATTR_LENGTH) == 0) ||
+                (query.attr2Condition[0] == '*') ||
+                matchesPattern(data[i].attr2, query.attr2Condition, MAX_ATTR_LENGTH);
+
+            bool attr3Match = (query.attr3Condition == -1) || (data[i].attr3 == query.attr3Condition);
+
+            if (attr1Match && attr2Match && attr3Match) {
+                int previousResultPos = resultPos;
+                formatSelectResult(data[i], query, tempResult, resultPos);
+
+                if (!anyResultFound) {
+                    safeCopyString(result, tempResult, MAX_RESULT_LENGTH);
+                    anyResultFound = true;
+                }
+                else {
+                    int currentLen = safeStringLength(result, MAX_RESULT_LENGTH);
+                    if (currentLen + (resultPos - previousResultPos) < MAX_RESULT_LENGTH) {
+                        safeCopyString(result + currentLen, tempResult + previousResultPos, MAX_RESULT_LENGTH - currentLen);
+                    }
+                }
+            }
+        }
+
+        if (!anyResultFound) {
+            result[0] = '\0';
         }
     }
 };
@@ -583,25 +784,20 @@ void runSingleProcess() {
             db.insert(attr1, attr2, attr3);
         }
         else if (command[0] == 'S') {  // SELECT
-            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
+            SelectQuery query;
+            parseSelectQuery(command, query);
+
             char result[MAX_RESULT_LENGTH];
-            db.query(attr1, attr2, attr3, result);
+            db.enhancedQuery(query, result);
 
             if (result[0] != '\0') {
                 outputFile << result;
             }
             else {
                 outputFile << "No records found. Query attributes: ";
-                if (attr1[0] != '\0' && attr1[0] != '*') {
-                    outputFile << "attr1=" << attr1 << ", ";
-                }
-                if (attr2[0] != '\0' && attr2[0] != '*') {
-                    outputFile << "attr2=" << attr2 << ", ";
-                }
-                if (attr3 != -1) {
-                    outputFile << "attr3=" << attr3;
-                }
-                outputFile << "\n";
+                outputFile << "attr1=" << query.attr1Condition << ", ";
+                outputFile << "attr2=" << query.attr2Condition << ", ";
+                outputFile << "attr3=" << query.attr3Condition << "\n";
             }
 
             tupleCountFile << db.getNumTuples() << ",\n";
@@ -640,6 +836,10 @@ void runWorker(int rank, int numWorkers) {
     int attr3, setAttr3;
     char result[MAX_RESULT_LENGTH];
 
+    // Buffers for selected columns
+    char selectedColumns[MAX_COLUMNS][MAX_COLUMN_NAME];
+    int selectedColumnCount;
+
 
     // Open output file to write tuple count for each worker
     std::ofstream outputFile("tuple_count.txt", std::ios::app);
@@ -666,16 +866,44 @@ void runWorker(int rank, int numWorkers) {
             }
         }
         else if (status.MPI_TAG == 3) {  // SELECT
-            MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 4, MPI_COMM_WORLD, &status);
-            MPI_Recv(&attr3, 1, MPI_INT, 0, 5, MPI_COMM_WORLD, &status);
+            // Receive selected columns
+            MPI_Recv(&selectedColumnCount, 1, MPI_INT, 0, 4, MPI_COMM_WORLD, &status);
+            
+            // Receive column names if any specific columns are selected
+            if (selectedColumnCount > 0) {
+                MPI_Recv(selectedColumns, selectedColumnCount * MAX_COLUMN_NAME, MPI_CHAR, 0, 5, MPI_COMM_WORLD, &status);
+            }
+
+            // Receive query conditions
+            MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 6, MPI_COMM_WORLD, &status);
+            MPI_Recv(&attr3, 1, MPI_INT, 0, 7, MPI_COMM_WORLD, &status);
+
+            // Prepare SelectQuery
+            SelectQuery query;
+            
+            // Set selected columns
+            for (int i = 0; i < selectedColumnCount; ++i) {
+                query.addSelectedColumn(selectedColumns[i]);
+            }
+            
+            // Set conditions
+            if (safeStringLength(buffer1, MAX_ATTR_LENGTH) > 0) {
+                safeCopyString(query.attr1Condition, buffer1, MAX_ATTR_LENGTH);
+            }
+            if (safeStringLength(buffer2, MAX_ATTR_LENGTH) > 0) {
+                safeCopyString(query.attr2Condition, buffer2, MAX_ATTR_LENGTH);
+            }
+            query.attr3Condition = attr3;
 
             // Query local database partition
-            db.query(buffer1, buffer2, attr3, result);
-            MPI_Send(result, MAX_RESULT_LENGTH, MPI_CHAR, 0, 6, MPI_COMM_WORLD);
+            char workerResult[MAX_RESULT_LENGTH];
+            db.enhancedQuery(query, workerResult);
+            
+            MPI_Send(workerResult, MAX_RESULT_LENGTH, MPI_CHAR, 0, 8, MPI_COMM_WORLD);
 
             // Send the current tuple count to master
             int tupleCount = db.getNumTuples();
-            MPI_Send(&tupleCount, 1, MPI_INT, 0, 7, MPI_COMM_WORLD);
+            MPI_Send(&tupleCount, 1, MPI_INT, 0, 9, MPI_COMM_WORLD);
         }
         else if (status.MPI_TAG == 8) {  // UPDATE
             MPI_Recv(buffer2, MAX_ATTR_LENGTH, MPI_CHAR, 0, 9, MPI_COMM_WORLD, &status);
@@ -763,71 +991,85 @@ void runMaster(int numWorkers) {
             }
         }
         else if (command[0] == 'S') {  // SELECT
-            // Track which attributes were actually used in the query
-            bool attr1Specified = false;
-            bool attr2Specified = false;
-            bool attr3Specified = false;
+            SelectQuery query;
+            parseSelectQuery(command, query);
 
-            parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
-            std::cout << "Parsed SELECT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
+            // Prepare buffers for query conditions
+            char workerAttr1[MAX_ATTR_LENGTH];
+            char workerAttr2[MAX_ATTR_LENGTH];
+            int workerAttr3;
 
-            // Determine which attributes were specifically queried
-            attr1Specified = (safeStringLength(attr1, MAX_ATTR_LENGTH) > 0 && attr1[0] != '*');
-            attr2Specified = (safeStringLength(attr2, MAX_ATTR_LENGTH) > 0 && attr2[0] != '*');
-            attr3Specified = (attr3 != -1);
+            // If specific conditions aren't set, use wildcard/default
+            safeCopyString(workerAttr1, query.attr1Condition[0] != '\0' ? query.attr1Condition : "*", MAX_ATTR_LENGTH);
+            safeCopyString(workerAttr2, query.attr2Condition[0] != '\0' ? query.attr2Condition : "*", MAX_ATTR_LENGTH);
+            workerAttr3 = query.attr3Condition;
 
+            // Track tuple counts
+            MyVector<int> tupleCounts;
             bool found = false;
-            MyVector<int> tupleCounts; // Store tuple counts for CSV
 
             // Query all workers
             for (int worker = 1; worker <= numWorkers; ++worker) {
-                MPI_Send(attr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 3, MPI_COMM_WORLD);
-                MPI_Send(attr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 4, MPI_COMM_WORLD);
-                MPI_Send(&attr3, 1, MPI_INT, worker, 5, MPI_COMM_WORLD);
+                // Send enhanced query parameters
+                MPI_Send(workerAttr1, MAX_ATTR_LENGTH, MPI_CHAR, worker, 3, MPI_COMM_WORLD);
 
-                char result[MAX_RESULT_LENGTH];
+                // Send selected columns
+                int selectedColumnCount = query.selectedColumnCount;
+                MPI_Send(&selectedColumnCount, 1, MPI_INT, worker, 4, MPI_COMM_WORLD);
+
+                // Send column names if any specific columns are selected
+                if (selectedColumnCount > 0) {
+                    MPI_Send(query.selectedColumns, selectedColumnCount * MAX_COLUMN_NAME, MPI_CHAR, worker, 5, MPI_COMM_WORLD);
+                }
+
+                // Send other query conditions
+                MPI_Send(workerAttr2, MAX_ATTR_LENGTH, MPI_CHAR, worker, 6, MPI_COMM_WORLD);
+                MPI_Send(&workerAttr3, 1, MPI_INT, worker, 7, MPI_COMM_WORLD);
+
+                // Receive worker's results
+                char workerResult[MAX_RESULT_LENGTH];
                 MPI_Status status;
-                MPI_Recv(result, MAX_RESULT_LENGTH, MPI_CHAR, worker, 6, MPI_COMM_WORLD, &status);
+                MPI_Recv(workerResult, MAX_RESULT_LENGTH, MPI_CHAR, worker, 8, MPI_COMM_WORLD, &status);
 
-                if (result[0] != '\0') {
-                    outputFile << result;
+                if (workerResult[0] != '\0') {
+                    outputFile << workerResult;
                     outputFile.flush();
                     found = true;
                 }
 
                 // Get the tuple count from the worker
                 int workerTupleCount;
-                MPI_Recv(&workerTupleCount, 1, MPI_INT, worker, 7, MPI_COMM_WORLD, &status);
+                MPI_Recv(&workerTupleCount, 1, MPI_INT, worker, 9, MPI_COMM_WORLD, &status);
                 tupleCounts.push_back(workerTupleCount);
             }
 
             if (!found) {
                 outputFile << "No records found.";
-                
-                // Only add specific conditions that were actually used in the query
-                bool firstCondition = true;
+
+                // Output specific conditions used in the query
                 outputFile << " Query attributes: ";
-                
-                if (attr1Specified) {
-                    outputFile << "attr1=" << attr1;
+                bool firstCondition = true;
+
+                if (query.attr1Condition[0] != '\0' && query.attr1Condition[0] != '*') {
+                    outputFile << "attr1=" << query.attr1Condition;
                     firstCondition = false;
                 }
-                
-                if (attr2Specified) {
+
+                if (query.attr2Condition[0] != '\0' && query.attr2Condition[0] != '*') {
                     if (!firstCondition) outputFile << ", ";
-                    outputFile << "attr2=" << attr2;
+                    outputFile << "attr2=" << query.attr2Condition;
                     firstCondition = false;
                 }
-                
-                if (attr3Specified) {
+
+                if (query.attr3Condition != -1) {
                     if (!firstCondition) outputFile << ", ";
-                    outputFile << "attr3=" << attr3;
+                    outputFile << "attr3=" << query.attr3Condition;
                 }
-                
+
                 outputFile << "\n";
                 outputFile.flush();
             }
-            
+
             // Write counts to CSV
             for (int i = 0; i < tupleCounts.getSize(); ++i) {
                 tupleCountFile << (i > 0 ? "," : "") << tupleCounts[i];
