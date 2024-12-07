@@ -8,7 +8,26 @@ const int MAX_TUPLES = 20000000;
 const int MAX_RESULT_LENGTH = 256;
 const int MAX_COMMAND_LENGTH = 256;
 
+// Custom string length function
+int safeStringLength(const char* str, int maxLen) {
+    int len = 0;
+    while (str[len] != '\0' && len < maxLen) {
+        len++;
+    }
+    return len;
+}
 
+// Custom string comparison function
+bool safeCompareStrings(const char* str1, const char* str2, int maxLen) {
+    int i = 0;
+    while (i < maxLen - 1 && str1[i] != '\0' && str2[i] != '\0') {
+        if (str1[i] != str2[i]) return false;
+        i++;
+    }
+    return str1[i] == str2[i];
+}
+
+// Custom string copy function
 void safeCopyString(char* dest, const char* src, int maxLen) {
     int i = 0;
     while (src[i] != '\0' && i < maxLen - 1) {
@@ -18,22 +37,53 @@ void safeCopyString(char* dest, const char* src, int maxLen) {
     dest[i] = '\0';
 }
 
-int safeStringLength(const char* str, int maxLen) {
-    int len = 0;
-    while (str[len] != '\0' && len < maxLen) {
-        len++;
+// Custom string matching function with wildcard support
+bool matchesPattern(const char* str, const char* pattern, int maxLen) {
+    // Wildcard matching
+    if (pattern[0] == '*' && pattern[1] == '\0') return true;
+
+    int strLen = safeStringLength(str, maxLen);
+    int patternLen = safeStringLength(pattern, maxLen);
+
+    // Check for prefix wildcard
+    if (pattern[patternLen - 1] == '*') {
+        if (patternLen - 1 > strLen) return false;
+        for (int i = 0; i < patternLen - 1; i++) {
+            if (str[i] != pattern[i]) return false;
+        }
+        return true;
     }
-    return len;
+
+    // Check for exact match
+    return safeCompareStrings(str, pattern, maxLen);
 }
 
-bool safeCompareStrings(const char* str1, const char* str2, int maxLen) {
-    int i = 0;
-    while (i < maxLen - 1 && str1[i] != '\0' && str2[i] != '\0') {
-        if (str1[i] != str2[i]) return false;
-        i++;
+struct Tuple {
+    char attr1[MAX_ATTR_LENGTH];
+    char attr2[MAX_ATTR_LENGTH];
+    int attr3;
+
+    Tuple() {
+        attr1[0] = '\0';
+        attr2[0] = '\0';
+        attr3 = 0;
     }
-    return str1[i] == str2[i];
-}
+
+    Tuple(const Tuple& other) {
+        safeCopyString(attr1, other.attr1, MAX_ATTR_LENGTH);
+        safeCopyString(attr2, other.attr2, MAX_ATTR_LENGTH);
+        attr3 = other.attr3;
+    }
+
+    Tuple& operator=(const Tuple& other) {
+        if (this != &other) {
+            safeCopyString(attr1, other.attr1, MAX_ATTR_LENGTH);
+            safeCopyString(attr2, other.attr2, MAX_ATTR_LENGTH);
+            attr3 = other.attr3;
+        }
+        return *this;
+    }
+};
 
 // Custom vector implementation
 template <typename T>
@@ -83,33 +133,6 @@ public:
     }
 };
 
-struct Tuple {
-    char attr1[MAX_ATTR_LENGTH];
-    char attr2[MAX_ATTR_LENGTH];
-    int attr3;
-
-    Tuple() {
-        attr1[0] = '\0';
-        attr2[0] = '\0';
-        attr3 = 0;
-    }
-
-    Tuple(const Tuple& other) {
-        safeCopyString(attr1, other.attr1, MAX_ATTR_LENGTH);
-        safeCopyString(attr2, other.attr2, MAX_ATTR_LENGTH);
-        attr3 = other.attr3;
-    }
-
-    Tuple& operator=(const Tuple& other) {
-        if (this != &other) {
-            safeCopyString(attr1, other.attr1, MAX_ATTR_LENGTH);
-            safeCopyString(attr2, other.attr2, MAX_ATTR_LENGTH);
-            attr3 = other.attr3;
-        }
-        return *this;
-    }
-};
-
 class Database {
 private:
     Tuple* data;
@@ -143,15 +166,26 @@ public:
         result[0] = '\0';
         char tempResult[MAX_RESULT_LENGTH];
         int resultPos = 0;
+        bool anyResultFound = false;
 
         for (int i = 0; i < size; ++i) {
-            if (safeCompareStrings(data[i].attr1, attr1, MAX_ATTR_LENGTH) &&
-                safeCompareStrings(data[i].attr2, attr2, MAX_ATTR_LENGTH) &&
-                data[i].attr3 == attr3) {
+            // More comprehensive matching logic
+            bool attr1Match = (safeStringLength(attr1, MAX_ATTR_LENGTH) == 0) ||
+                (attr1[0] == '*') ||
+                matchesPattern(data[i].attr1, attr1, MAX_ATTR_LENGTH);
 
+            bool attr2Match = (safeStringLength(attr2, MAX_ATTR_LENGTH) == 0) ||
+                (attr2[0] == '*') ||
+                matchesPattern(data[i].attr2, attr2, MAX_ATTR_LENGTH);
+
+            bool attr3Match = (attr3 == -1) || (data[i].attr3 == attr3);
+
+            if (attr1Match && attr2Match && attr3Match) {
+                // Construct result string
                 safeCopyString(tempResult, "Found: ", MAX_RESULT_LENGTH);
                 resultPos = 7;
 
+                // Copy attr1
                 int j = 0;
                 while (data[i].attr1[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 3) {
                     tempResult[resultPos++] = data[i].attr1[j++];
@@ -159,6 +193,7 @@ public:
                 tempResult[resultPos++] = ',';
                 tempResult[resultPos++] = ' ';
 
+                // Copy attr2
                 j = 0;
                 while (data[i].attr2[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 3) {
                     tempResult[resultPos++] = data[i].attr2[j++];
@@ -166,6 +201,7 @@ public:
                 tempResult[resultPos++] = ',';
                 tempResult[resultPos++] = ' ';
 
+                // Convert attr3 to string
                 int num = data[i].attr3;
                 char numStr[12];
                 int numLen = 0;
@@ -181,12 +217,14 @@ public:
                     }
                 }
 
+                // Reverse number string
                 for (int k = 0; k < numLen / 2; k++) {
                     char temp = numStr[k];
                     numStr[k] = numStr[numLen - 1 - k];
                     numStr[numLen - 1 - k] = temp;
                 }
 
+                // Append number to result
                 for (int k = 0; k < numLen && resultPos < MAX_RESULT_LENGTH - 2; k++) {
                     tempResult[resultPos++] = numStr[k];
                 }
@@ -194,9 +232,20 @@ public:
                 tempResult[resultPos++] = '\n';
                 tempResult[resultPos] = '\0';
 
-                safeCopyString(result, tempResult, MAX_RESULT_LENGTH);
-                std::cout << "Found match: " << result << std::endl;
-                return;
+                // Append to results if not already found
+                if (!anyResultFound) {
+                    safeCopyString(result, tempResult, MAX_RESULT_LENGTH);
+                    anyResultFound = true;
+                }
+                else {
+                    // If multiple results found, append to existing result
+                    int currentLen = safeStringLength(result, MAX_RESULT_LENGTH);
+                    if (currentLen + resultPos < MAX_RESULT_LENGTH) {
+                        safeCopyString(result + currentLen, tempResult, MAX_RESULT_LENGTH - currentLen);
+                    }
+                }
+
+                std::cout << "Found match: " << tempResult << std::endl;
             }
         }
     }
@@ -219,11 +268,13 @@ void extractValue(const char* input, char* output, int& pos, int maxLen) {
 void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
     int pos = 0;
 
+    // Reset everything to wildcard/empty state
     attr1[0] = '\0';
     attr2[0] = '\0';
-    attr3 = 0;
+    attr3 = -1;
 
     if (line[0] == 'I') {
+        // INSERT parsing remains the same as before
         while (line[pos] != '\0' && line[pos] != '(') pos++;
         if (line[pos] == '\0') return;
 
@@ -232,54 +283,67 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3) {
 
         while (line[pos] == ' ' || line[pos] == ',') pos++;
         while (line[pos] >= '0' && line[pos] <= '9') {
-            attr3 = attr3 * 10 + (line[pos] - '0');
+            attr3 = (attr3 == -1 ? 0 : attr3 * 10) + (line[pos] - '0');
             pos++;
         }
     }
     else if (line[0] == 'S') {
+        // More robust SELECT parsing
         while (line[pos] != '\0' && (line[pos] != 'W' || line[pos + 1] != 'H')) pos++;
         if (line[pos] == '\0') return;
 
-        pos += 6;
+        pos += 6;  // Move past "WHERE"
 
-        if (strstr(line + pos, "attr1=") == line + pos) {
-            pos += 6;
-            int attrPos = 0;
-            while (line[pos] != '\0' && line[pos] != ' ' && attrPos < MAX_ATTR_LENGTH - 1) {
-                if (line[pos] != ' ') {
-                    attr1[attrPos++] = line[pos];
-                }
-                pos++;
-            }
-            attr1[attrPos] = '\0';
-        }
+        // Default to wildcard if no conditions specified
+        safeCopyString(attr1, "*", MAX_ATTR_LENGTH);
+        safeCopyString(attr2, "*", MAX_ATTR_LENGTH);
+        attr3 = -1;
 
-        while (line[pos] != '\0' && (line[pos] != 'A' || line[pos + 1] != 'N')) pos++;
-        if (line[pos] != '\0') {
-            pos += 4;
-            if (strstr(line + pos, "attr2=") == line + pos) {
+        // Parse all possible conditions
+        bool hasCondition = false;
+        while (line[pos] != '\0') {
+            // Check for attr1 condition
+            if (safeCompareStrings(line + pos, "attr1=", 6)) {
                 pos += 6;
                 int attrPos = 0;
-                while (line[pos] != '\0' && line[pos] != ' ' && attrPos < MAX_ATTR_LENGTH - 1) {
-                    if (line[pos] != ' ') {
-                        attr2[attrPos++] = line[pos];
-                    }
-                    pos++;
+                attr1[0] = '\0';  // Reset previous value
+                while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                    attr1[attrPos++] = line[pos++];
+                }
+                attr1[attrPos] = '\0';
+                hasCondition = true;
+            }
+            // Check for attr2 condition
+            else if (safeCompareStrings(line + pos, "attr2=", 6)) {
+                pos += 6;
+                int attrPos = 0;
+                attr2[0] = '\0';  // Reset previous value
+                while (line[pos] != '\0' && line[pos] != ' ' && line[pos] != 'A' && attrPos < MAX_ATTR_LENGTH - 1) {
+                    attr2[attrPos++] = line[pos++];
                 }
                 attr2[attrPos] = '\0';
+                hasCondition = true;
             }
-        }
-
-        while (line[pos] != '\0' && (line[pos] != 'A' || line[pos + 1] != 'N')) pos++;
-        if (line[pos] != '\0') {
-            pos += 4;
-            if (strstr(line + pos, "attr3=") == line + pos) {
+            // Check for attr3 condition
+            else if (safeCompareStrings(line + pos, "attr3=", 6)) {
                 pos += 6;
+                attr3 = 0;
                 while (line[pos] >= '0' && line[pos] <= '9') {
                     attr3 = attr3 * 10 + (line[pos] - '0');
                     pos++;
                 }
+                hasCondition = true;
             }
+            else {
+                pos++;
+            }
+        }
+
+        // If no conditions were found, leave everything as wildcard
+        if (!hasCondition) {
+            safeCopyString(attr1, "*", MAX_ATTR_LENGTH);
+            safeCopyString(attr2, "*", MAX_ATTR_LENGTH);
+            attr3 = -1;
         }
     }
 }
@@ -420,8 +484,18 @@ void runMaster(int numWorkers) {
             }
         }
         else if (command[0] == 'S') {  // SELECT
+            // Track which attributes were actually used in the query
+            bool attr1Specified = false;
+            bool attr2Specified = false;
+            bool attr3Specified = false;
+
             parseInputLine(command, attr1, attr2, attr3);
             std::cout << "Parsed SELECT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
+
+            // Determine which attributes were specifically queried
+            attr1Specified = (safeStringLength(attr1, MAX_ATTR_LENGTH) > 0 && attr1[0] != '*');
+            attr2Specified = (safeStringLength(attr2, MAX_ATTR_LENGTH) > 0 && attr2[0] != '*');
+            attr3Specified = (attr3 != -1);
 
             bool found = false;
             MyVector<int> tupleCounts; // Store tuple counts for CSV
@@ -449,12 +523,32 @@ void runMaster(int numWorkers) {
             }
 
             if (!found) {
-                outputFile << "No records found. Query attributes: ";
-                outputFile << "attr1=" << attr1 << ", ";
-                outputFile << "attr2=" << attr2 << ", ";
-                outputFile << "attr3=" << attr3 << "\n";
+                outputFile << "No records found.";
+                
+                // Only add specific conditions that were actually used in the query
+                bool firstCondition = true;
+                outputFile << " Query attributes: ";
+                
+                if (attr1Specified) {
+                    outputFile << "attr1=" << attr1;
+                    firstCondition = false;
+                }
+                
+                if (attr2Specified) {
+                    if (!firstCondition) outputFile << ", ";
+                    outputFile << "attr2=" << attr2;
+                    firstCondition = false;
+                }
+                
+                if (attr3Specified) {
+                    if (!firstCondition) outputFile << ", ";
+                    outputFile << "attr3=" << attr3;
+                }
+                
+                outputFile << "\n";
                 outputFile.flush();
             }
+            
             // Write counts to CSV
             for (int i = 0; i < tupleCounts.getSize(); ++i) {
                 tupleCountFile << (i > 0 ? "," : "") << tupleCounts[i];

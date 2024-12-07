@@ -1,14 +1,1 @@
-Found: Musical, Disney, 2017
-Found: Fantasy, NewLine, 2001
-Found: Documentary, PBS, 2019
-Found: Crime, HBO, 2020
-Found: Western, MGM, 1962
-Found: Musical, Paramount, 2016
-Found: Fantasy, Disney, 2017
-Found: Adventure, Universal, 2015
-Found: Comedy, Miramax, 1994
-Found: Biography, Netflix, 2020
-No records found. Query attributes: attr1=Crime, attr2=Netflix, attr3=2020
-No records found. Query attributes: attr1=Western, attr2=Disney, attr3=1962
-No records found. Query attributes: attr1=Thriller, attr2=HBO, attr3=2021
-Found: Romance, Focus, 2008
+Found: Romance, DreamWorks, 2000
