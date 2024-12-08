@@ -345,6 +345,7 @@ public:
             data[size].attr3 = attr3;
             size++;
             isDeleted[size] = false;
+            std::cout << "Inserted: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
         }
     }
 
@@ -773,19 +774,14 @@ void parseInputLine(const char* line, char* attr1, char* attr2, int& attr3, char
     }
 }
 
-void runSingleProcess() {
+void runSingleProcess(const std::string& inputFileName, const std::string& outputFileName, const std::string& tupleCountFileName) {
     Database db;
-    std::ifstream inputFile("input.sql");
-    std::ofstream outputFile("output.txt", std::ios::out);
-    std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);
+    std::ifstream inputFile(inputFileName);
+    std::ofstream outputFile(outputFileName, std::ios::out);
+    std::ofstream tupleCountFile(tupleCountFileName, std::ios::out);
 
-    if (!inputFile.is_open()) {
-        std::cerr << "Error: Could not open input file\n";
-        return;
-    }
-
-    if (!outputFile.is_open() || !tupleCountFile.is_open()) {
-        std::cerr << "Error: Could not open output file\n";
+    if (!inputFile.is_open() || !outputFile.is_open() || !tupleCountFile.is_open()) {
+        std::cerr << "Error: Could not open files\n";
         return;
     }
 
@@ -798,6 +794,7 @@ void runSingleProcess() {
     int setAttr3;
 
     while (inputFile.getline(command, MAX_COMMAND_LENGTH)) {
+        std::cout << "Processing command: " << command << std::endl;
 
         if (command[0] == 'I') {  // INSERT
             parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
@@ -972,34 +969,30 @@ void runWorker(int rank, int numWorkers) {
     outputFile.close();
 }
 
-void runMaster(int numWorkers) {
-    std::ifstream inputFile("input.sql");
-    std::ofstream outputFile("output.txt", std::ios::out);
-    std::ofstream tupleCountFile("tuple_counts.csv", std::ios::out);
+void runMaster(int numWorkers, const std::string& inputFileName, const std::string& outputFileName, const std::string& tupleCountFileName) {
+    std::ifstream inputFile(inputFileName);
+    std::ofstream outputFile(outputFileName, std::ios::out);
+    std::ofstream tupleCountFile(tupleCountFileName, std::ios::out);
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        std::cerr << "Error: Could not open files\n";
+        return;
+    }
 
     char setAttr1[MAX_ATTR_LENGTH];
     char setAttr2[MAX_ATTR_LENGTH];
     int setAttr3;
-
-    if (!inputFile.is_open()) {
-        std::cerr << "Error: Could not open input file\n";
-        return;
-    }
-
-    if (!outputFile.is_open()) {
-        std::cerr << "Error: Could not open output file\n";
-        return;
-    }
-
     char command[MAX_COMMAND_LENGTH];
     char attr1[MAX_ATTR_LENGTH];
     char attr2[MAX_ATTR_LENGTH];
     int attr3;
 
     while (inputFile.getline(command, MAX_COMMAND_LENGTH)) {
+        std::cout << "Processing command: " << command << std::endl;
 
         if (command[0] == 'I') {  // INSERT
             parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
+            std::cout << "Parsed INSERT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
             // Broadcast insert to all workers
             for (int worker = 1; worker <= numWorkers; ++worker) {
@@ -1175,14 +1168,32 @@ int main(int argc, char** argv) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
+    // Default file names
+    std::string inputFileName = "input.sql";
+    std::string outputFileName = "output.txt";
+    std::string tupleCountFileName = "tuple_counts.csv";
+
+    // Parse command-line arguments
+    for (int i = 1; i < argc; ++i) {
+        if (std::string(argv[i]) == "-i" && i + 1 < argc) {
+            inputFileName = argv[++i];
+        }
+        else if (std::string(argv[i]) == "-o" && i + 1 < argc) {
+            outputFileName = argv[++i];
+        }
+        else if (std::string(argv[i]) == "-t" && i + 1 < argc) {
+            tupleCountFileName = argv[++i];
+        }
+    }
+
     double totalStartTime = MPI_Wtime();
 
     if (size == 1) {
-        runSingleProcess();
+        runSingleProcess(inputFileName, outputFileName, tupleCountFileName);
     }
     else {
         if (rank == 0) {
-            runMaster(size - 1);
+            runMaster(size - 1, inputFileName, outputFileName, tupleCountFileName);
         }
         else {
             runWorker(rank, size - 1);
