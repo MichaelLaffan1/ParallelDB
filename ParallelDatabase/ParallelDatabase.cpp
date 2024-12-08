@@ -2,6 +2,11 @@
 #include <iostream>
 #include <fstream>
 
+struct WorkRequest {
+    int workerRank;
+    int currentLoad;  // Number of tuples currently handled by worker
+};
+
 // Define constants
 const int MAX_ATTR_LENGTH = 100;
 const int MAX_TUPLES = 20000000;
@@ -9,6 +14,17 @@ const int MAX_RESULT_LENGTH = 20000;
 const int MAX_COMMAND_LENGTH = 20000;
 const int MAX_COLUMNS = 10;  
 const int MAX_COLUMN_NAME = 20;
+
+
+struct WorkItem {
+    char command;  // 'I' for Insert, 'S' for Select, etc.
+    char attr1[MAX_ATTR_LENGTH];
+    char attr2[MAX_ATTR_LENGTH];
+    int attr3;
+    char setAttr1[MAX_ATTR_LENGTH];
+    char setAttr2[MAX_ATTR_LENGTH];
+    int setAttr3;
+};
 
 // Custom string length function
 int safeStringLength(const char* str, int maxLen) {
@@ -238,10 +254,16 @@ private:
     int size;
     bool* isDeleted;  // Track deleted records
     void formatSelectResult(const Tuple& tuple, const SelectQuery& query, char* result, int& resultPos) {
+        // Reset resultPos
+        resultPos = 0;
         bool firstColumn = true;
 
+        // Calculate maximum required space for the result
+        // Add extra space for commas, spaces, and newline
+        int maxRequiredSpace = 2 * MAX_ATTR_LENGTH + 20;  // Extra space for commas, spaces, number conversion
+
         if (query.isColumnSelected("attr1")) {
-            if (!firstColumn) {
+            if (!firstColumn && resultPos < MAX_RESULT_LENGTH - 2) {
                 result[resultPos++] = ',';
                 result[resultPos++] = ' ';
             }
@@ -253,7 +275,7 @@ private:
         }
 
         if (query.isColumnSelected("attr2")) {
-            if (!firstColumn) {
+            if (!firstColumn && resultPos < MAX_RESULT_LENGTH - 2) {
                 result[resultPos++] = ',';
                 result[resultPos++] = ' ';
             }
@@ -265,42 +287,35 @@ private:
         }
 
         if (query.isColumnSelected("attr3")) {
-            if (!firstColumn) {
+            if (!firstColumn && resultPos < MAX_RESULT_LENGTH - 2) {
                 result[resultPos++] = ',';
                 result[resultPos++] = ' ';
             }
-            int num = tuple.attr3;
-            char numStr[12];
-            int numLen = 0;
 
-            // Convert number to string (same as previous implementation)
-            if (num == 0) {
-                numStr[numLen++] = '0';
-            }
-            else {
-                int temp = num;
-                while (temp > 0) {
-                    numStr[numLen++] = '0' + (temp % 10);
-                    temp /= 10;
-                }
-            }
+            // Convert number to string with buffer safety
+            char numStr[20];  // More than enough for any integer
+            snprintf(numStr, sizeof(numStr), "%d", tuple.attr3);
 
-            // Reverse number string
-            for (int k = 0; k < numLen / 2; k++) {
-                char temp = numStr[k];
-                numStr[k] = numStr[numLen - 1 - k];
-                numStr[numLen - 1 - k] = temp;
-            }
-
-            // Copy number to result
-            for (int k = 0; k < numLen && resultPos < MAX_RESULT_LENGTH - 2; k++) {
-                result[resultPos++] = numStr[k];
+            // Copy number to result with bounds checking
+            int j = 0;
+            while (numStr[j] != '\0' && resultPos < MAX_RESULT_LENGTH - 2) {
+                result[resultPos++] = numStr[j++];
             }
         }
 
-        result[resultPos++] = '\n';
-        result[resultPos] = '\0';
+        // Ensure space for newline and null terminator
+        if (resultPos < MAX_RESULT_LENGTH - 2) {
+            result[resultPos++] = '\n';
+            result[resultPos] = '\0';
+        }
+        else {
+            // If we're at the buffer limit, ensure proper termination
+            result[MAX_RESULT_LENGTH - 2] = '\n';
+            result[MAX_RESULT_LENGTH - 1] = '\0';
+            resultPos = MAX_RESULT_LENGTH - 1;
+        }
     }
+
 
 public:
     Database() : capacity(MAX_TUPLES), size(0) {
@@ -330,7 +345,6 @@ public:
             data[size].attr3 = attr3;
             size++;
             isDeleted[size] = false;
-            std::cout << "Inserted: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
         }
     }
 
@@ -506,10 +520,12 @@ public:
         result[0] = '\0';
         char tempResult[MAX_RESULT_LENGTH];
         int resultPos = 0;
+        int totalResultPos = 0;
         bool anyResultFound = false;
 
         for (int i = 0; i < size; ++i) {
-            // Matching logic
+            if (isDeleted[i]) continue;
+
             bool attr1Match = (safeStringLength(query.attr1Condition, MAX_ATTR_LENGTH) == 0) ||
                 (query.attr1Condition[0] == '*') ||
                 matchesPattern(data[i].attr1, query.attr1Condition, MAX_ATTR_LENGTH);
@@ -521,18 +537,23 @@ public:
             bool attr3Match = (query.attr3Condition == -1) || (data[i].attr3 == query.attr3Condition);
 
             if (attr1Match && attr2Match && attr3Match) {
-                int previousResultPos = resultPos;
+                // Reset tempResult for each match
+                tempResult[0] = '\0';
+                resultPos = 0;
+
                 formatSelectResult(data[i], query, tempResult, resultPos);
 
-                if (!anyResultFound) {
-                    safeCopyString(result, tempResult, MAX_RESULT_LENGTH);
-                    anyResultFound = true;
-                }
-                else {
-                    int currentLen = safeStringLength(result, MAX_RESULT_LENGTH);
-                    if (currentLen + (resultPos - previousResultPos) < MAX_RESULT_LENGTH) {
-                        safeCopyString(result + currentLen, tempResult + previousResultPos, MAX_RESULT_LENGTH - currentLen);
+                // Check if we have space in the main result buffer
+                if (totalResultPos + resultPos < MAX_RESULT_LENGTH) {
+                    if (!anyResultFound) {
+                        safeCopyString(result, tempResult, MAX_RESULT_LENGTH);
+                        totalResultPos = resultPos;
                     }
+                    else {
+                        safeCopyString(result + totalResultPos, tempResult, MAX_RESULT_LENGTH - totalResultPos);
+                        totalResultPos += resultPos;
+                    }
+                    anyResultFound = true;
                 }
             }
         }
@@ -777,7 +798,6 @@ void runSingleProcess() {
     int setAttr3;
 
     while (inputFile.getline(command, MAX_COMMAND_LENGTH)) {
-        std::cout << "Processing command: " << command << std::endl;
 
         if (command[0] == 'I') {  // INSERT
             parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
@@ -977,11 +997,9 @@ void runMaster(int numWorkers) {
     int attr3;
 
     while (inputFile.getline(command, MAX_COMMAND_LENGTH)) {
-        std::cout << "Processing command: " << command << std::endl;
 
         if (command[0] == 'I') {  // INSERT
             parseInputLine(command, attr1, attr2, attr3, setAttr1, setAttr2, setAttr3);
-            std::cout << "Parsed INSERT values: " << attr1 << ", " << attr2 << ", " << attr3 << std::endl;
 
             // Broadcast insert to all workers
             for (int worker = 1; worker <= numWorkers; ++worker) {

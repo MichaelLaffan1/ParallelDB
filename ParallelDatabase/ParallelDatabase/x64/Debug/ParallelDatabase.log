@@ -1,5 +1,5 @@
 ﻿  ParallelDatabase.cpp
-C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(929,68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(947,68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(837,10): warning C4101: 'result': unreferenced local variable
+C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(949,68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(967,68): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\ParallelDatabase.cpp(857,10): warning C4101: 'result': unreferenced local variable
   ParallelDatabase.vcxproj -> C:\Users\zackz\GitHub\ParallelDB\ParallelDatabase\x64\Debug\ParallelDatabase.exe

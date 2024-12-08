@@ -13,7 +13,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 327,
+          "DockedHeight": 308,
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -24,7 +24,7 @@
               "RelativeDocumentMoniker": "ParallelDatabase.cpp",
               "ToolTip": "C:\\Users\\zackz\\GitHub\\ParallelDB\\ParallelDatabase\\ParallelDatabase.cpp",
               "RelativeToolTip": "ParallelDatabase.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAKkBAAAAAAAAAAAWwAICAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-25T21:57:38.034Z",
               "EditorCaption": ""
@@ -32,7 +32,7 @@
           ]
         },
         {
-          "DockedHeight": 19,
+          "DockedHeight": 38,
           "SelectedChildIndex": -1,
           "Children": [
             {

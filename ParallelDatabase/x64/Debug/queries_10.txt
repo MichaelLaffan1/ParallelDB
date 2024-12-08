@@ -1,6 +1,6 @@
 INSERT INTO table VALUES (Action, Universal, 2015)
 INSERT INTO table VALUES (Comedy, Miramax, 1997)
-SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+SELECT attr2, attr3 FROM table WHERE attr1=Action AND attr3=2015
 UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
 DELETE FROM table WHERE attr1=Romance
 DELETE FROM table WHERE attr1=Documentary
