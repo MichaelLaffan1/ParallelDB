@@ -1,0 +1,800 @@
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical
+INSERT INTO table VALUES (Action, Universal, 2015)
+INSERT INTO table VALUES (Comedy, Miramax, 1997)
+SELECT attr2, attr3 FROM table WHERE attr1=SciFi AND attr3=1984
+UPDATE table SET attr1=Drama, attr2=Paramount WHERE attr1=Fantasy
+DELETE FROM table WHERE attr1=Romance
+DELETE FROM table WHERE attr1=Documentary
+SELECT attr2, attr3 FROM table WHERE attr1=Adventure AND attr3=1999
+SELECT attr2, attr3 FROM table WHERE attr1=Crime AND attr3=2003
+UPDATE table SET attr1=Horror, attr2=Lionsgate WHERE attr1=Thriller
+DELETE FROM table WHERE attr1=Musical

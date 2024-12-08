@@ -5,8 +5,8 @@
 // Define constants
 const int MAX_ATTR_LENGTH = 100;
 const int MAX_TUPLES = 20000000;
-const int MAX_RESULT_LENGTH = 256;
-const int MAX_COMMAND_LENGTH = 256;
+const int MAX_RESULT_LENGTH = 20000;
+const int MAX_COMMAND_LENGTH = 20000;
 const int MAX_COLUMNS = 10;  
 const int MAX_COLUMN_NAME = 20;
 
